@@ -7,7 +7,9 @@ export class AppController {
 
   @Get()
   @Render('home')
-  getHello(): string {
-    return this.appService.getHello();
+  getHello() {
+    return {
+      title: "Anasayfa"
+    }
   }
 }

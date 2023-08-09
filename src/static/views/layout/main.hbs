@@ -15,8 +15,8 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-transparent container">
-        <a class="navbar-brand logo primary-color" href="#">Burak BECERİKLİ</a>
+    <nav class="navbar navbar-expand-lg navbar-light bg-transparent container p-3">
+        <a class="navbar-brand logo primary-color" href="/">Burak BECERİKLİ</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -39,6 +39,16 @@
     <div class="container">
         {{{body}}}
     </div>
+    <script>
+        function toggleNavbar() {
+            const navbar = document.getElementById('navbarNav');
+            navbar.classList.toggle('show');
+        }
+
+        const navbarToggler = document.querySelector('.navbar-toggler');
+        navbarToggler.addEventListener('click', toggleNavbar);
+
+    </script>
 </body>
 
 </html>

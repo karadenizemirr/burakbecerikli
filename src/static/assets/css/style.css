@@ -1,16 +1,22 @@
 @import 'font.css';
 @import 'bootstrap.min.css';
+@import 'responsive.css';
 
 :root {
-    --primary-color: #D71313;
-    --secondary-color: #0D1282;
+    --primary-color: #DD576F;
+    --secondary-color: #0081BA;
 }
 
 
-* {
+body {
     font-family: 'montserrat-medium';
-    background-color: #EEEDED !important;
+    background-color: #F2F2F2 ;
 }
+
+.bg-none {
+    background-color: transparent !important;
+    background: transparent !important;
+  }
 
 .primary-color {
     color: #D71313 !important;
@@ -67,10 +73,21 @@ li:hover::after {
 }
 
 .custom-button{
-    border: 1px solid var(--primary-color);
-    transition: 300ms ease-in-out;
+    background-color: var(--secondary-color) !important;
+    color: white
+}
+.custom-button:hover {
+    color: gray
 }
 
-.custom-button:hover {
-    border: 1px solid var(--secondary-color);
+.home-bg {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: -1;
+}
+
+.home-bg img {
+    max-width: 100vw;
+    max-height: 100vh;
 }
