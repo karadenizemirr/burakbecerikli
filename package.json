@@ -29,7 +29,10 @@
     "handlebars": "^4.7.8",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.8.1",
-    "typeorm": "^0.3.17"
+    "typeorm": "^0.3.17",
+    "@nestjs/cli": "^10.0.0",
+    "typescript": "^5.1.3"
+
   },
   "devDependencies": {
     "@nestjs/cli": "^10.0.0",
