@@ -21,7 +21,6 @@ export class PuppeteerService {
                     ]
                 }
             )
-            
             return browser
 
         }catch(err){
