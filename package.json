@@ -18,7 +18,7 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
-    "heroku buildpacks":"add jontewks/puppeteer"
+    "heroku-postbuild": "mkdir ./.cache && mv /app/.cache/puppeteer ./.cache"
   },
   "dependencies": {
     "@fastify/secure-session": "^6.2.0",

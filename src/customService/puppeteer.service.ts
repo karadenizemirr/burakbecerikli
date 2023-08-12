@@ -11,7 +11,7 @@ export class PuppeteerService {
         try{
             const browser = await puppeteer.launch(
                 {
-                    headless: false,
+                    headless: true,
                     args: [
                         '--no-sandbox', // Güvenlik nedeniyle --no-sandbox argümanını kullanın
                         '--disable-setuid-sandbox',
