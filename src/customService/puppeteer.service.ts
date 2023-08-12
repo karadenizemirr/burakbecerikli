@@ -25,6 +25,7 @@ export class PuppeteerService {
             return browser
 
         }catch(err){
+            console.log(err)
             throw new Error('Get request error')
         }
     }
