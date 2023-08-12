@@ -99,7 +99,7 @@ export class GoogleService {
             // TODO: Sosyal medya linkleri alınacak
             const data = await page.evaluate((link:string) => {
                 var element = Array.from(document.querySelectorAll('.kR99db')).map((el:any) => el.innerText)
-                var phone_number = element.filter((item:string) => item.match(/(\(\d{4}\)\s?\d{3}\s?\d{2}\s?\d{2})|(0?[5-9]{1}[0-9]{2}\s?[0-9]{3}\s?[0-9]{2}\s?[0-9]{2})/))
+                var phone_number = element.filter((item:string) => item.match(/((\+|00)?90\s?)?((\(?\d{3}\)?)|(\d{3}))?\s?\d{3}\s?\d{2}\s?\d{2}(\s?-\s?\d{2})?/))
                 var website = element.filter((item:string) => item.match(/\b[a-zA-Z0-9-]+\.(com|com\.tr|net|org|edu|gov|mil|co|io|xyz|info)\b/))
                 return {
                     name: document.querySelector('h1.lfPIob')?.textContent,

@@ -24,7 +24,15 @@
 </div>
 <script>
 
-    new DataTable('#example', {
+    $('#example').DataTable({
+        dom: 'Bfrtip',
+        buttons: [
+            'colvis',
+            'excel',
+            'print'
+        ],
+        responsive: true,
+        select:true,
         ajax: '/search/getAllData',
         columns: [
 
@@ -33,7 +41,7 @@
                 data: 'address',
                 render: function(data,type,row){
                     if (type === 'display'){
-                        var truncatedAddress = data.substr(0, 10) + '...' + data.substr(-10);
+                        var truncatedAddress = data.substr(0, 5) + '...' + data.substr(-10);
                         if (data.length > 20){
                             return '<span class="address">' + truncatedAddress +'...</span>';
                         }
@@ -102,6 +110,6 @@
                     isOpened = false;
                 }
             })
-        }
+        },
     })
 </script>

@@ -8,6 +8,7 @@ import { JwtService } from './customService/jwt.service';
 import { APP_INTERCEPTOR } from '@nestjs/core';
 import { AuthInterceptors } from './auth/auth.interceptors';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { SocialModule } from './modules/social/social.module';
 
 @Global()
 @Module({
@@ -16,7 +17,8 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
     UserModule, 
     ConfigModule.forRoot(
       {isGlobal: true,envFilePath: '.env'}
-    )
+    ),
+    SocialModule
   
   ],
   controllers: [AppController],
