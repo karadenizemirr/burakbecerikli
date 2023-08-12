@@ -3,7 +3,7 @@
 </div>
 
 <div class="row d-flex align-items-center justify-content-center" style="height: 60vh;">   
-    <div class="content text-center mt-5 w-50">
+    <div class="content text-center mt-5" id="responsiveDiv">
         <div class="title">
             <h1 class="animate__animated animate__backInLeft" style="animation-delay: 300ms;">
                 Aradığınız Bilgilere Kolayca Ulaşın
@@ -11,6 +11,26 @@
             <p class="animate__animated animate__backInLeft" style="animation-delay: 700ms;">
                 Aramalarınızı kolay bir şekilde yapın, verilerinizi güvenle saklayın.
             </p>
+        </div>
+        <div class="body animate__animated animate__bounceInLeft">
+            <div class="login-form">
+                <form action="/user/login" method="post">
+                    <div class="row">
+                        <div class="col">
+                            <input type="text" class="form-control" placeholder="Kullanıcı Adı" required autocomplete="off" name="username" {{#if isLogin}}disabled{{/if}}>
+                        </div>
+                        <div class="col">
+                            <input type="password" class="form-control" placeholder="Şifre" required autocomplete="off" name="password" {{#if isLogin}}disabled{{/if}}>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <button class="btn custom-button mt-3" type="submit" {{#if isLogin}}disabled{{/if}}>
+                            <i class="fas fa-sign-in-alt"></i>Giriş Yap
+                        </button>
+                    </div>
+                </form>
+
+            </div>
         </div>
     </div>
 </div>

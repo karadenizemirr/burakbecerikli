@@ -1,0 +1,107 @@
+<div class="table-container mt-5">
+    <table id="example" class="display" style="width:100%">
+        <thead>
+            <tr>
+                <th>Adı</th>
+                <th>Adres</th>
+                <th>Telefon Nu.</th>
+                <th>Websitesi</th>
+                <th>Puan</th>
+                <th>Link</th>
+            </tr>
+        </thead>
+        <tfoot>
+            <tr>
+                <th>Adı</th>
+                <th>Adres</th>
+                <th>Telefon Nu.</th>
+                <th>Websitesi</th>
+                <th>Puan</th>
+                <th>Link</th>
+            </tr>
+        </tfoot>
+    </table>
+</div>
+<script>
+
+    new DataTable('#example', {
+        ajax: '/search/getAllData',
+        columns: [
+
+            { data: 'name' },
+            { 
+                data: 'address',
+                render: function(data,type,row){
+                    if (type === 'display'){
+                        var truncatedAddress = data.substr(0, 10) + '...' + data.substr(-10);
+                        if (data.length > 20){
+                            return '<span class="address">' + truncatedAddress +'...</span>';
+                        }
+                        return '<span class="address">' + data + '...</span>';
+                    }
+                    return data
+                }
+            },
+            { 
+                data: 'phone_number',
+                render: function(data,type,row){
+                    if (!data){
+                        return '-'
+                    }
+
+                    return data
+                }
+
+            },
+            { 
+                data: 'website',
+                render: function(data,type,row){
+                    if (!data){
+                        return '-'
+                    }
+
+                    return data
+                }
+                
+            },
+            {
+                data: 'rate',
+                render: function(data,type,row){
+                    if (!data){
+                        return 0
+                    }
+                    return String(data).replace('(', '').replace(')','')
+                }
+            },
+            { 
+                data: 'link',
+                render: function(data,type,row){
+                    if (type === 'display'){
+                        if (data.length > 20){
+                            return '<a href="#" class="link">' + data.substr(0, 20) + '...</a>';
+                        }
+                        return '<a href="#" class="link">' + data + '</a>';
+                    }
+                    return data
+                }
+            },
+        ],
+        rowCallback: function(row,data){
+            var isOpened = false
+            $(row).on('click', '.link', function(){
+                window.open(data.link, '_blank');
+            }),
+            $(row).on('click', function(){
+                if (!isOpened) {
+                    var address = data.address;
+                    var newRow = '<tr><td class="text-danger" colspan="' + data.length + '">' + address + '</td></tr>';
+                    $(row).after(newRow);
+                    isOpened = true;
+                } else {
+                    $(row).next().remove();
+                    isOpened = false;
+                }
+            })
+        }
+    })
+</script>

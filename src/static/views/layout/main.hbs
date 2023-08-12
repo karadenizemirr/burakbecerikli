@@ -4,19 +4,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> {{title}} - Burak Becerikli APP</title>
+    <title> {{title}} - DATABUZZ</title>
     <link rel="stylesheet" href="/assets/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
-    <script src="/assets/js/jquery.min.js"></script>
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.15.2/css/selectize.default.min.css">
+    <link href="https://cdn.datatables.net/v/dt/dt-1.13.6/datatables.min.css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.min.js"></script>
     <script src="/assets/bootstrap.min.js"></script>
-    <script src="/assets/pooper.js"></script>
+    <script src="/assets/js/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.15.2/js/selectize.min.js"></script>
+    <script src="https://cdn.datatables.net/v/dt/dt-1.13.6/datatables.min.js"></script>
+    <script src="/assets/js/script.js"></script>
 </head>
 
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-transparent container p-3">
-        <a class="navbar-brand logo primary-color" href="/">Burak BECERİKLİ</a>
+        <a class="navbar-brand logo primary-color" href="/">DATABUZZ</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -27,11 +32,16 @@
                     <a class="nav-link" href="/search"><i class="fas fa-search"></i>Arama Yap</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#"><i class="fas fa-database"></i>Verileri Göster</a>
+                    <a class="nav-link" href="/result"><i class="fas fa-database"></i>Verileri Göster</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#"><i class="fas fa-plus"></i>Modül Ekle</a>
                 </li>
+                {{#if isLogin}}
+                <li class="nav-item">
+                    <a class="nav-link" href="/user/logout"><i class="fas fa-sign-out-alt"></i>Çıkış Yap</a>
+                </li>
+                {{/if}}
             </ul>
         </div>
     </nav>
