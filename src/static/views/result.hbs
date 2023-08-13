@@ -99,17 +99,21 @@
             $(row).on('click', '.link', function(){
                 window.open(data.link, '_blank');
             }),
-            $(row).on('click', function(){
-                if (!isOpened) {
-                    var address = data.address;
-                    var newRow = '<tr><td class="text-danger" colspan="' + data.length + '">' + address + '</td></tr>';
+            $(row).on('click', function(event) {
+                if ($(event.target).is('td:nth-child(2)')) {
+                    if (!isOpened) {
+                        var address = data.address;
+                        var newRow = '<tr><td class="text-danger" colspan="' + data.length + '">' + address + '</td></tr>';
                     $(row).after(newRow);
-                    isOpened = true;
-                } else {
-                    $(row).next().remove();
-                    isOpened = false;
+                        isOpened = true;
+                    } else {
+                        $(row).next().remove();
+                        isOpened = false;
+                    }
+                } else if ($(event.target).is('button')) {
+                    event.stopPropagation();
                 }
-            })
+            });
         },
     })
 </script>
