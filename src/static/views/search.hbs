@@ -37,10 +37,7 @@
                         <span class="visually-hidden">Yüklemiyor...</span>
                     </div>
                 </div>
-                <div class="progress" role="progressbar" aria-label="Warning example" aria-valuenow="0"
-                    aria-valuemin="0" aria-valuemax="100" id="search_status">
-                    <div class="progress-bar text-bg-warning" style="width: 0%" id="search_progress">0%</div>
-                </div>
+                <div class="form-group mb-3" id="estimated_time"></div>
 
             </form>
         </div>
@@ -93,46 +90,44 @@
         $('#search_form').submit(function (e) {
             e.preventDefault();
 
-            $('#search_button').hide()
-            $('.spinner-border').show()
-            var formData = $(this).serialize()
-            var progressBar = $('#search_status')
-            var searchProgress = $('#search_progress')
+            $('#search_button').hide();
+            $('.spinner-border').show();
+            var formData = $(this).serialize();
+
+            var startTime = new Date().getTime(); // Get the start time in milliseconds
+
+            var estimatedRemainingTimeDiv = $('#estimated_time');
+
+            var updateEstimatedTime = function() {
+                var currentTime = new Date().getTime();
+                var elapsedTime = currentTime - startTime;
+                var estimatedRemainingTime = (elapsedTime / 1000) * (totalItems - processedItems) / processedItems;
+
+                estimatedRemainingTimeDiv.text('Estimated remaining time: ' + estimatedRemainingTime.toFixed(2) + ' seconds');
+            };
+
+            var updateInterval = setInterval(updateEstimatedTime, 1000);
+
             $.ajax({
                 url: '/search',
                 method: 'POST',
                 data: formData,
-                xhr: function () {
-                    var xhr = new window.XMLHttpRequest()
-                    xhr.addEventListener('progress', function (evt) {
-                        if (evt.lengthComputable) {
-                            var percentComplete = evt.loaded / evt.total * 100;
-                            searchProgress.css('width', percentComplete + '%');
-                            search_progress.text(percentComplete + '%');
-                            progressBar.text(percentComplete + '%')
-                            progressBar.attr('aria-valuenow', percentComplete);
-                        }
-                    }, false)
-                    return xhr;
-
-                },
                 success: function (response) {
-                    $('#search_button').show()
-                    $('.spinner-border').hide()
+                    clearInterval(updateInterval);
+                    $('#search_button').show();
+                    $('.spinner-border').hide();
                 },
                 error: function (xhr, status, error) {
-                    console.log(xhr);
-                },
-
-                error: function (xhr, status, error) {
-                    console.log('Country data error')
+                    $('#estimated_time').text('Bir sorun meydana geldi.').addClass('text-danger')
                 },
                 complete: function () {
-                    $('#search_form')[0].reset()
+                    clearInterval(updateInterval);
+                    $('#search_form')[0].reset();
+                    estimatedRemainingTimeDiv.text('');
                 }
+            });
+        });
 
-            })
-        })
 
     });
 </script>

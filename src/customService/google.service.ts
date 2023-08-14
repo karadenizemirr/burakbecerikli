@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
 import { PuppeteerService } from "./puppeteer.service";
 import { AppDataSource } from "./mysql.service";
 import { SearchModel } from "src/models/search.model";
@@ -22,8 +22,15 @@ export class GoogleService {
                 password: this.configService.get<string>('PROXY_PASSWORD')
             })
             await page.goto(this.base_url + keyword) // This keywords
-            // Container .ecceSd
+            // Cookie Button
+            // #yDmH0d > c-wiz > div > div > div > div.NIoIEf > div.G4njw > div.AIC7ge > div.CxJub > div.VtwTSb > form:nth-child(2) > div > div > button
 
+            await page.evaluate(() => {
+                const element:any = document.querySelector('#yDmH0d > c-wiz > div > div > div > div.NIoIEf > div.G4njw > div.AIC7ge > div.CxJub > div.VtwTSb > form:nth-child(2) > div > div > button')
+                if (element){
+                    element.click()
+                }
+            })
             const scroll_container = ".m6QErb[aria-label]"
             await page.waitForSelector(scroll_container)
 
@@ -49,8 +56,7 @@ export class GoogleService {
             return result
 
         } catch (err) {
-            console.log(err)
-            throw new Error('Google bussiness scraper error')
+            throw new HttpException('Error google scraping', HttpStatus.FAILED_DEPENDENCY)
         }
     }
 
@@ -87,7 +93,7 @@ export class GoogleService {
             
             return a
         }catch(err){
-            throw new Error('Parse data error')
+            throw new HttpException('Parse error', HttpStatus.FAILED_DEPENDENCY)
         }
     }
 
@@ -125,7 +131,7 @@ export class GoogleService {
             return data
 
         }catch(err){
-            return;
+            throw new HttpException('Error google scraping', HttpStatus.FAILED_DEPENDENCY)
         }
     }
 }
