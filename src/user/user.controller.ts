@@ -14,8 +14,7 @@ export class UserController {
 
         if (login.token){
             session.set('token', login.token)
-            
-            res.redirect(302, '/')
+            res.redirect(302, '/result')
         }
         
         return {

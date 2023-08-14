@@ -8,6 +8,7 @@
                 <th>Websitesi</th>
                 <th>Puan</th>
                 <th>Link</th>
+                <th>Tarih</th>
             </tr>
         </thead>
         <tfoot>
@@ -18,6 +19,7 @@
                 <th>Websitesi</th>
                 <th>Puan</th>
                 <th>Link</th>
+                <th>Tarih</th>
             </tr>
         </tfoot>
     </table>
@@ -25,11 +27,52 @@
 <script>
 
     $('#example').DataTable({
-        dom: 'Bfrtip',
+        dom: 'lBfrtip',
+        keys: 'true',
+        colReorder: 'true',
+        rowReoder: 'true',
+        fixedHeader: 'true',
+        language: {
+            "url": "https://cdn.datatables.net/plug-ins/1.10.25/i18n/Turkish.json"
+        },
         buttons: [
             'colvis',
-            'excel',
-            'print'
+            {
+                extend: 'excel',
+                customize: function (xlsx) {
+                    var sheet = xlsx.xl.worksheets['sheet1.xml'];
+                    $('row', sheet).each(function () {
+                        var addressCell = $(this).find("address"); // Örnek olarak 'address' sütunu B sütununda bulunuyor
+                        var originalAddress = addressCell.text();
+                        addressCell.text(originalAddress);
+                    });
+                },
+                exportOptions: {
+                    format: {
+                        body: function (data, row, column, node) {
+                            if (column === 1) { // Örnek olarak 'address' sütunu 1. sütunda bulunuyor
+                                if (data.length > 20) {
+                                    return data;
+                                }
+                                return data.substr(0, 5) + '...' + data.substr(-10);
+                            }
+                            return data;
+                        }
+                    }
+                },
+                extend: 'excel',
+                text: 'Excel',
+                exportOptions: {
+                    columns: ':visible'
+                },
+            },
+            {
+                extend: 'print',
+                text: 'PDF',
+                exportOptions: {
+                    columns: ':visible'
+                }
+            }
         ],
         responsive: true,
         select:true,
@@ -38,17 +81,7 @@
 
             { data: 'name' },
             { 
-                data: 'address',
-                render: function(data,type,row){
-                    if (type === 'display'){
-                        var truncatedAddress = data.substr(0, 5) + '...' + data.substr(-10);
-                        if (data.length > 20){
-                            return '<span class="address">' + truncatedAddress +'...</span>';
-                        }
-                        return '<span class="address">' + data + '...</span>';
-                    }
-                    return data
-                }
+                data: 'address', 
             },
             { 
                 data: 'phone_number',
@@ -93,27 +126,19 @@
                     return data
                 }
             },
+            {
+                data: 'createdAt',
+                render: function(data,type,row){
+                    var formattedDate = moment(data).locale('tr').format('LLL');
+                    return formattedDate
+                }
+            }
         ],
         rowCallback: function(row,data){
             var isOpened = false
             $(row).on('click', '.link', function(){
                 window.open(data.link, '_blank');
-            }),
-            $(row).on('click', function(event) {
-                if ($(event.target).is('td:nth-child(2)')) {
-                    if (!isOpened) {
-                        var address = data.address;
-                        var newRow = '<tr><td class="text-danger" colspan="' + data.length + '">' + address + '</td></tr>';
-                    $(row).after(newRow);
-                        isOpened = true;
-                    } else {
-                        $(row).next().remove();
-                        isOpened = false;
-                    }
-                } else if ($(event.target).is('button')) {
-                    event.stopPropagation();
-                }
-            });
+            })
         },
     })
 </script>

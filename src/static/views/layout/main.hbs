@@ -11,16 +11,18 @@
     <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.15.2/css/selectize.default.min.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/themes/base/jquery-ui.min.css" rel="stylesheet">
-    <link href="https://cdn.datatables.net/v/ju/jszip-3.10.1/dt-1.13.6/b-2.4.1/b-colvis-2.4.1/b-html5-2.4.1/b-print-2.4.1/r-2.5.0/sl-1.7.0/datatables.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/v/ju/jszip-3.10.1/dt-1.13.6/b-2.4.1/b-colvis-2.4.1/b-html5-2.4.1/b-print-2.4.1/cr-1.7.0/date-1.5.1/fh-3.4.0/r-2.5.0/rr-1.4.1/sl-1.7.0/datatables.min.css" rel="stylesheet">
+
     {{!-- Scripts --}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.min.js"></script>
     <script src="/assets/bootstrap.min.js"></script>
     <script src="/assets/js/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.15.2/js/selectize.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
-    <script src="https://cdn.datatables.net/v/ju/jszip-3.10.1/dt-1.13.6/b-2.4.1/b-colvis-2.4.1/b-html5-2.4.1/b-print-2.4.1/r-2.5.0/sl-1.7.0/datatables.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
+<script src="https://cdn.datatables.net/v/ju/jszip-3.10.1/dt-1.13.6/b-2.4.1/b-colvis-2.4.1/b-html5-2.4.1/b-print-2.4.1/cr-1.7.0/date-1.5.1/fh-3.4.0/r-2.5.0/rr-1.4.1/sl-1.7.0/datatables.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 
 
 
@@ -38,6 +40,10 @@
         <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
             <ul class="navbar-nav">
                 <li class="nav-item active">
+                    <a class="nav-link" href="/"><i class="fa fa-home"></i>Anasayfa</a>
+                </li>
+                {{#if isLogin}}
+                <li class="nav-item active">
                     <a class="nav-link" href="/search"><i class="fas fa-search"></i>Arama Yap</a>
                 </li>
                 <li class="nav-item">
@@ -46,7 +52,6 @@
                 <li class="nav-item">
                     <a class="nav-link" href="#"><i class="fas fa-plus"></i>Modül Ekle</a>
                 </li>
-                {{#if isLogin}}
                 <li class="nav-item">
                     <a class="nav-link" href="/user/logout"><i class="fas fa-sign-out-alt"></i>Çıkış Yap</a>
                 </li>

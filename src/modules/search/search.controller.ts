@@ -28,7 +28,9 @@ export class SearchController {
 
     @Post()
     async post_search(@Body() bodyData:any){
-        return this.searchService.get_search(bodyData)
+        return {
+            data: this.searchService.get_search(bodyData)
+        }
     }
 
     @Get('getAllData')
