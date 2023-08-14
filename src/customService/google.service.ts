@@ -109,7 +109,7 @@ export class GoogleService {
                 var website = element.filter((item:string) => item.match(/\b[a-zA-Z0-9-]+\.(com|com\.tr|net|org|edu|gov|mil|co|io|xyz|info)\b/))
                 return {
                     name: document.querySelector('h1.lfPIob')?.textContent,
-                    address: String(element[0]).replace('Турска', 'Türkiye'),
+                    address: String(element[0]).replace('Турска', 'Türkiye').replace('Turquía', 'Türkiye'),
                     website: website[0] || null,
                     phone_number : phone_number[0] || null,
                     rate: document.querySelector('#QA0Szd > div > div > div.w6VYqd > div:nth-child(2) > div > div.e07Vkf.kA9KIf > div > div > div.TIHn2 > div > div.lMbq3e > div.LBgpqf > div > div.fontBodyMedium.dmRWX > div.F7nice > span:nth-child(2) > span > span')?.textContent,
