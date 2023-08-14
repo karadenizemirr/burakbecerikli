@@ -9,6 +9,7 @@ import { APP_INTERCEPTOR } from '@nestjs/core';
 import { AuthInterceptors } from './auth/auth.interceptors';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { SocialModule } from './modules/social/social.module';
+import { TaskModule } from './modules/task/task.module';
 
 @Global()
 @Module({
@@ -18,7 +19,8 @@ import { SocialModule } from './modules/social/social.module';
     ConfigModule.forRoot(
       {isGlobal: true,envFilePath: '.env'}
     ),
-    SocialModule
+    SocialModule,
+    TaskModule
   
   ],
   controllers: [AppController],

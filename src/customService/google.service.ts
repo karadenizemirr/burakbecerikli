@@ -22,8 +22,6 @@ export class GoogleService {
                 password: this.configService.get<string>('PROXY_PASSWORD')
             })
             await page.goto(this.base_url + keyword) // This keywords
-            // Cookie Button
-            // #yDmH0d > c-wiz > div > div > div > div.NIoIEf > div.G4njw > div.AIC7ge > div.CxJub > div.VtwTSb > form:nth-child(2) > div > div > button
 
             await page.evaluate(() => {
                 const element:any = document.querySelector('#yDmH0d > c-wiz > div > div > div > div.NIoIEf > div.G4njw > div.AIC7ge > div.CxJub > div.VtwTSb > form:nth-child(2) > div > div > button')
@@ -49,7 +47,7 @@ export class GoogleService {
             const result = []
 
             for (const link of links){
-                result.push(await this.get_data(link,page))
+                result.push(await this.get_data(link,page,keyword))
             }
             await browser.close()
 
@@ -97,7 +95,7 @@ export class GoogleService {
         }
     }
 
-    private async get_data(link:any,page:any){
+    private async get_data(link:any,page:any,category?:string){
         try{
 
             // Open Link
@@ -126,6 +124,7 @@ export class GoogleService {
             )
 
             if (!control && data.phone_number){
+                data.category = category.toUpperCase()
                 await this.searchRepository.save(data)
             }
             return data

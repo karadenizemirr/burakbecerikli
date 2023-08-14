@@ -1,17 +1,20 @@
-import { Injectable } from "@nestjs/common";
+import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
 import { GoogleService } from "src/customService/google.service";
 import { AppDataSource } from "src/customService/mysql.service";
 import { SearchModel } from "src/models/search.model";
+import { TaskModel } from "src/models/task.model";
 import { countryType } from "src/types/country.type";
+import { TaskService } from "../task/task.service";
 
 @Injectable()
 export class SearchService {
     private country_data:any
     private searchRepository:any
 
-    constructor(private googleService: GoogleService) {
+    constructor(private googleService: GoogleService, private taskService: TaskService) {
         this.country_data = countryType[0].data
         this.searchRepository = AppDataSource.getRepository(SearchModel)
+        
     }
 
     async get_search(data:any){
@@ -20,6 +23,8 @@ export class SearchService {
 
         for (const keyword of keywords){
             const k = String(data?.city).toLowerCase() +' '+ String(data?.district).toLowerCase()+' '+ String(keyword).toLowerCase()
+            // Create Task
+            const task = await this.taskService.create_task(keyword)
             if (data.city !== 'all' && data.district !== 'all'){
                 const r = await this.googleService.maps_scraper(k)
                 return_data.push(...r)
@@ -36,15 +41,12 @@ export class SearchService {
             }
         }
 
+        if (return_data.length > 0){
+            // Tasks End
+            await this.taskService.delete_task()
+        }
+
         return return_data
-    }
-
-    async get_all_city(){
-
-    }
-
-    async get_all_district(){
-
     }
 
     private async get_only_city_only_district(city:string){
@@ -75,5 +77,16 @@ export class SearchService {
         return;
        } 
     }
+
+    async delete_all_data(){
+        try{
+
+            await this.searchRepository.delete({})
+
+        }catch(err){
+            throw new HttpException('Delete all error', HttpStatus.BAD_REQUEST)
+        }
+    }
+
 
 }

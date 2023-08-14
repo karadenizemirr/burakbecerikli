@@ -17,11 +17,14 @@ export class SearchModel {
     @Column({nullable: true})
     website: string
 
-    @Column()
+    @Column({length: 500})
     link: string
 
     @Column({nullable: true})
     rate: string
+
+    @Column({nullable:true})
+    category: string
 
     @CreateDateColumn()
     createdAt: Date

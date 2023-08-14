@@ -4,10 +4,8 @@
             <h1>
                 Arama Yap
             </h1>
-            <p class="primary-color" style="font-size: 12px;" >
-                Bu işlem zaman alabilir. Sayfadan ayrılsanız bile işleminiz devam edecektir. 
-                Verilerinizi görüntülemek için veri sayfanızı ziyaret edin.
-            </p>
+            
+
         </div>
         <div class="card-body">
             <form id="search_form">
@@ -30,10 +28,16 @@
                     </div>
                 </div>
                 <div class="form-group mb-3">
-                    <button class="btn custom-button" id="search_button" type="submit">
-                        Arama Başlat
-                    </button>
-                    <div class="spinner-border" role="status" >
+                    <div class="button-group">
+                        <button class="btn custom-button" id="search_button" type="submit">
+                            Arama Başlat
+                        </button>
+                        <button class="btn border" type="button" data-bs-toggle="offcanvas"
+                            data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions" id="task-button">
+                            <i class="fas fa-tasks"></i>Aramalarım
+                        </button>
+                    </div>
+                    <div class="spinner-border mb-4 mt-4" role="status">
                         <span class="visually-hidden">Yüklemiyor...</span>
                     </div>
                 </div>
@@ -43,6 +47,8 @@
         </div>
     </div>
 </div>
+{{> task}}
+
 <script>
     $(document).ready(function () {
         $('.spinner-border').hide()
@@ -98,7 +104,7 @@
 
             var estimatedRemainingTimeDiv = $('#estimated_time');
 
-            var updateEstimatedTime = function() {
+            var updateEstimatedTime = function () {
                 var currentTime = new Date().getTime();
                 var elapsedTime = currentTime - startTime;
                 var estimatedRemainingTime = (elapsedTime / 1000) * (totalItems - processedItems) / processedItems;
@@ -129,6 +135,6 @@
             });
         });
 
-
+    
     });
 </script>

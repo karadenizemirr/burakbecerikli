@@ -6,26 +6,32 @@ import { AppDataSource } from './customService/mysql.service';
 import secureSession from '@fastify/secure-session';
 import * as crypto from 'crypto'
 import { GlobalExceptionFilter } from './customService/notfound.service';
+import handlebars from 'handlebars';
+import fs from 'fs'
 
 async function bootstrap() {
   const app = await NestFactory.create<NestFastifyApplication>(
     AppModule,
     new FastifyAdapter(),
   );
-
+  
   AppDataSource.initialize().then(() => console.log('Database connect success')).catch((err) => console.log('Database connect not success'))
 
   app.useStaticAssets({
     root: join(__dirname, '..', 'src/static/assets'),
     prefix: '/assets/',
   });
+
   app.setViewEngine({
     engine: {
       handlebars: require('handlebars'),
     },
     templates: join(__dirname, '..', 'src/static/views'),
-    layout: 'layout/main'
+    layout: 'layout/main',
+
   });
+  const partialContent = fs.readFileSync(join(__dirname, '..', 'src/static/views/partials/task.hbs'), 'utf-8');
+  handlebars.registerPartial('task', partialContent);
   
   const key = crypto.randomBytes(32)
   

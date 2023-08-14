@@ -1,4 +1,5 @@
 import { SearchModel } from "src/models/search.model";
+import { TaskModel } from "src/models/task.model";
 import { UserModel } from "src/models/user.model";
 import { DataSource } from "typeorm";
 
@@ -11,7 +12,7 @@ import { DataSource } from "typeorm";
 //     database: "burakbecerikli",
 //     synchronize: true,
 //     logging: true,
-//     entities: [SearchModel,UserModel],
+//     entities: [SearchModel,UserModel,TaskModel],
 //     subscribers: [],
 //     migrations: [],
 // })
@@ -25,7 +26,7 @@ export const AppDataSource = new DataSource({
     database: "pl6mxovsxak2w6sb",
     synchronize: true,
     logging: true,
-    entities: [SearchModel,UserModel],
+    entities: [SearchModel,UserModel,TaskModel],
     subscribers: [],
     migrations: [],
 })
