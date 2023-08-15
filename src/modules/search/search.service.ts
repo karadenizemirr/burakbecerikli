@@ -18,35 +18,48 @@ export class SearchService {
     }
 
     async get_search(data:any){
-        const keywords = String(data.keywords).split(',')
-        const return_data = []
+        try{
+            const keywords = String(data.keywords).split(',')
+            const return_data = []
 
-        for (const keyword of keywords){
-            const k = String(data?.city).toLowerCase() +' '+ String(data?.district).toLowerCase()+' '+ String(keyword).toLowerCase()
-            // Create Task
-            const task = await this.taskService.create_task(keyword)
-            if (data.city !== 'all' && data.district !== 'all'){
-                const r = await this.googleService.maps_scraper(k)
-                return_data.push(...r)
-            }else if (data.city !== 'all' && data.district === 'all'){
-                const city_in_district = await this.get_only_city_only_district(data?.city)
-                const districts = city_in_district[0]?.ilceler
+            const timeout = (ms:number) => {
+                return new Promise((resolve) => setTimeout(resolve, ms))
+            }
 
-                for (const district of districts){
-                    const k = String(data?.city).toLowerCase() +' '+ String(district.ilce_adi).toLowerCase()+' '+ String(keyword).toLowerCase()
+            for (const keyword of keywords){
+                const k = String(data?.city).toLowerCase() +' '+ String(data?.district).toLowerCase()+' '+ String(keyword).toLowerCase()
+                // Create Task
+                const task = await this.taskService.create_task(keyword)
+                if (data.city !== 'all' && data.district !== 'all'){
                     const r = await this.googleService.maps_scraper(k)
                     return_data.push(...r)
+                }else if (data.city !== 'all' && data.district === 'all'){
+                    const city_in_district = await this.get_only_city_only_district(data?.city)
+                    const districts = city_in_district[0]?.ilceler
+    
+                    for (const district of districts){
+                        const k = String(data?.city).toLowerCase() +' '+ String(district.ilce_adi).toLowerCase()+' '+ String(keyword).toLowerCase()
+                        const r = await this.googleService.maps_scraper(k)
+                        return_data.push(...r)
+                    }
+                    
                 }
-                
             }
-        }
 
-        if (return_data.length > 0){
-            // Tasks End
+            const result = await Promise.race([Promise.all(return_data), timeout(5000)])
+            if (!result){
+                await this.taskService.delete_task()
+                return return_data
+            }
+            if (return_data.length > 0){
+                // Tasks End
+                await this.taskService.delete_task()
+            }
+    
+            return return_data
+        }catch(err){
             await this.taskService.delete_task()
         }
-
-        return return_data
     }
 
     private async get_only_city_only_district(city:string){
@@ -87,6 +100,5 @@ export class SearchService {
             throw new HttpException('Delete all error', HttpStatus.BAD_REQUEST)
         }
     }
-
 
 }
