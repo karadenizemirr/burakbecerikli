@@ -26,6 +26,18 @@ export class SearchModel {
     @Column({nullable:true})
     category: string
 
+    @Column({nullable:true})
+    facebook:string
+
+    @Column({nullable:true})
+    instagram:string
+
+    @Column({nullable:true})
+    youtube:string
+
+    @Column({nullable:true})
+    tiktok:string
+
     @CreateDateColumn()
     createdAt: Date
 

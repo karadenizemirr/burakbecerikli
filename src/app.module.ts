@@ -10,6 +10,7 @@ import { AuthInterceptors } from './auth/auth.interceptors';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { SocialModule } from './modules/social/social.module';
 import { TaskModule } from './modules/task/task.module';
+import { SocialService } from "./customService/social.service";
 
 @Global()
 @Module({
@@ -24,10 +25,10 @@ import { TaskModule } from './modules/task/task.module';
   
   ],
   controllers: [AppController],
-  providers: [AppService,PuppeteerService, JwtService, {
+  providers: [AppService,PuppeteerService,SocialService, JwtService, {
     provide: APP_INTERCEPTOR,
     useClass:AuthInterceptors
   }],
-  exports: [PuppeteerService, JwtService]
+  exports: [PuppeteerService, JwtService, SocialService]
 })
 export class AppModule {}

@@ -26,7 +26,7 @@ export const AppDataSource = new DataSource({
     database: "pl6mxovsxak2w6sb",
     synchronize: true,
     logging: true,
-    entities: [SearchModel,UserModel,TaskModel],
+    entities: [SearchModel, UserModel, TaskModel],
     subscribers: [],
     migrations: [],
 })

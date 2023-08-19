@@ -3,12 +3,13 @@ import { PuppeteerService } from "./puppeteer.service";
 import { AppDataSource } from "./mysql.service";
 import { SearchModel } from "src/models/search.model";
 import { ConfigService } from "@nestjs/config";
+import { SocialService } from "./social.service";
 
 @Injectable()
 export class GoogleService {
     private base_url: any
     private searchRepository = AppDataSource.getRepository(SearchModel)
-    constructor(private puppeteerService: PuppeteerService, private configService: ConfigService) {
+    constructor(private puppeteerService: PuppeteerService, private configService: ConfigService, private socialService: SocialService) {
         this.base_url = "https://www.google.com/maps/?q="
     }
 
@@ -125,6 +126,9 @@ export class GoogleService {
 
             if (!control && data.phone_number){
                 data.category = category.toUpperCase()
+                // Get Social Media
+                const social = await this.socialService.get_social(data.name)
+                data.instagram = await social?.data?.instagram[0] || null
                 await this.searchRepository.save(data)
             }
             return data

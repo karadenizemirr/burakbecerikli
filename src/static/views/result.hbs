@@ -7,6 +7,7 @@
                 <th>Adres</th>
                 <th>Telefon Nu.</th>
                 <th>Websitesi</th>
+                <th>Instagram</th>
                 <th>Puan</th>
                 <th>Link</th>
                 <th>Tarih</th>
@@ -19,6 +20,7 @@
                 <th>Adres</th>
                 <th>Telefon Nu.</th>
                 <th>Websitesi</th>
+                <th>Instagram</th>
                 <th>Puan</th>
                 <th>Link</th>
                 <th>Tarih</th>
@@ -137,6 +139,16 @@
                 }
                 
             },
+          {
+            data: 'instagram',
+            render: function(data,type,row){
+              if (!data){
+                return "-"
+              }else {
+                return `<a href="${data}" target="_blank">${String(data).match(/(?<=instagram.com\/)[\w_]+/)[0]}</a>`
+              }
+            }
+          },
             {
                 data: 'rate',
                 render: function(data,type,row){
